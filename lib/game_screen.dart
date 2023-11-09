@@ -45,10 +45,10 @@ class _GameScreenState extends State<GameScreen> {
       context: context,
       builder: (context) {
         return SimpleDialog(
-          title: Text('Winner!'),
+          title: const Text('Winner!'),
           children: [
             Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Text('$winner is the winner!'),
             ),
             SimpleDialogOption(
@@ -56,7 +56,7 @@ class _GameScreenState extends State<GameScreen> {
                 Navigator.of(context).pop();
                 resetGame();
               },
-              child: Text('Play Again'),
+              child: const Text('Play Again'),
             ),
           ],
         );
@@ -69,9 +69,9 @@ class _GameScreenState extends State<GameScreen> {
       context: context,
       builder: (context) {
         return SimpleDialog(
-          title: Text('GAME OVER!'),
+          title: const Text('GAME OVER!'),
           children: [
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(16),
               child: Text('NO ONE WINNES '),
             ),
@@ -80,7 +80,7 @@ class _GameScreenState extends State<GameScreen> {
                 Navigator.of(context).pop();
                 resetGame();
               },
-              child: Text('Play Again'),
+              child: const Text('Play Again'),
             ),
           ],
         );
@@ -133,7 +133,7 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: const Text('Tic Tac Toe')),
+        title: const Center(child: Text('Tic Tac Toe')),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -143,8 +143,9 @@ class _GameScreenState extends State<GameScreen> {
             child: Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                ),
                 itemCount: 9,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
@@ -167,7 +168,7 @@ class _GameScreenState extends State<GameScreen> {
                         child: Center(
                           child: Text(
                             board[row][col],
-                            style: TextStyle(fontSize: 40),
+                            style: const TextStyle(fontSize: 40),
                           ),
                         ),
                       ),
@@ -177,28 +178,24 @@ class _GameScreenState extends State<GameScreen> {
               ),
             ),
           ),
-          Row(
+          const Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text('Turn'),
-              InkWell(
-                borderRadius: BorderRadius.circular(5),
-                onTap: () => Icon(Icons.one_x_mobiledata),
-              )
             ],
           ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               FilledButton(
                 onPressed: () {},
-                child: Text('Player X'),
+                child: const Text('Player X'),
               ),
               FilledButton(
                 onPressed: () {},
-                child: Text('Player O'),
+                child: const Text('Player O'),
               ),
             ],
           ),
