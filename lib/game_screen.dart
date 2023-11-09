@@ -18,13 +18,11 @@ class _GameScreenState extends State<GameScreen> {
         board[col][row] = ispalyerX ? 'X' : 'O';
         ispalyerX = !ispalyerX;
 
-        String winner = checkForWinner();
-        // ignore: unnecessary_null_comparison
+        String? winner = checkForWinner();
+
         if (winner != null) {
-          // Display winner message
           showWinnerDialog(winner);
         } else if (isGameOver()) {
-          // Display tie message
           showTieDialog();
         }
       });
@@ -35,11 +33,11 @@ class _GameScreenState extends State<GameScreen> {
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
         if (board[i][j] == '') {
-          return false; // There are still empty cells
+          return false;
         }
       }
     }
-    return true; // All cells are filled
+    return true;
   }
 
   void showWinnerDialog(String winner) {
@@ -90,8 +88,7 @@ class _GameScreenState extends State<GameScreen> {
     );
   }
 
-  String checkForWinner() {
-    // Check rows
+  String? checkForWinner() {
     for (int i = 0; i < 3; i++) {
       if (board[i][0] == board[i][1] &&
           board[i][1] == board[i][2] &&
@@ -100,7 +97,6 @@ class _GameScreenState extends State<GameScreen> {
       }
     }
 
-    // Check columns
     for (int i = 0; i < 3; i++) {
       if (board[0][i] == board[1][i] &&
           board[1][i] == board[2][i] &&
@@ -109,7 +105,6 @@ class _GameScreenState extends State<GameScreen> {
       }
     }
 
-    // Check diagonals
     if (board[0][0] == board[1][1] &&
         board[1][1] == board[2][2] &&
         board[0][0] != '') {
@@ -121,7 +116,7 @@ class _GameScreenState extends State<GameScreen> {
       return board[0][2];
     }
 
-    return null.toString(); // No winner
+    return null;
   }
 
   void resetGame() {
@@ -141,14 +136,17 @@ class _GameScreenState extends State<GameScreen> {
         title: Center(child: const Text('Tic Tac Toe')),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(top: 100, left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3),
                 itemCount: 9,
+                shrinkWrap: true,
                 itemBuilder: (context, index) {
                   final row = index ~/ 3;
                   final col = index % 3;
@@ -179,35 +177,31 @@ class _GameScreenState extends State<GameScreen> {
               ),
             ),
           ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Text('Turn'),
-          //     InkWell(
-          //       borderRadius: BorderRadius.circular(5),
-          //       onTap: () => Icon(Icons.one_x_mobiledata),
-          //     )
-          //   ],
-          // ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     FilledButton(
-          //       onPressed: () {},
-          //       child: Text('Player X'),
-          //     ),
-          //     SizedBox(
-          //       width: 40,
-          //     ),
-          //     FilledButton(
-          //       onPressed: () {},
-          //       child: Text('Player O'),
-          //     ),
-          //   ],
-          // ),
-          // SizedBox(
-          //   height: 150,
-          // ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text('Turn'),
+              InkWell(
+                borderRadius: BorderRadius.circular(5),
+                onTap: () => Icon(Icons.one_x_mobiledata),
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              FilledButton(
+                onPressed: () {},
+                child: Text('Player X'),
+              ),
+              FilledButton(
+                onPressed: () {},
+                child: Text('Player O'),
+              ),
+            ],
+          ),
         ],
       ),
     );
