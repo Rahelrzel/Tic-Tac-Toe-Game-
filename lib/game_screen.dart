@@ -44,21 +44,53 @@ class _GameScreenState extends State<GameScreen> {
     showDialog(
       context: context,
       builder: (context) {
-        return SimpleDialog(
-          title: const Text('Winner!'),
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text('$winner is the winner!'),
+        return AlertDialog(
+          title: Center(
+            child: Text(
+              winner,
+              style: TextStyle(
+                  fontSize: 90, color: Color.fromARGB(255, 218, 116, 236)),
             ),
-            SimpleDialogOption(
+          ),
+          content: SizedBox(
+            height: 25,
+            child: Column(
+              children: [
+                Text(
+                  'Player $winner Won!!',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(
+                      Color.fromARGB(255, 208, 58, 235))),
               onPressed: () {
                 Navigator.of(context).pop();
                 resetGame();
               },
-              child: const Text('Play Again'),
+              child: const Center(
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.replay,
+                      color: Colors.black,
+                    ),
+                    Text(
+                      'Play Again',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
+          backgroundColor: Colors.black.withOpacity(0.4),
         );
       },
     );
@@ -68,21 +100,38 @@ class _GameScreenState extends State<GameScreen> {
     showDialog(
       context: context,
       builder: (context) {
-        return SimpleDialog(
-          title: const Text('GAME OVER!'),
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(16),
-              child: Text('NO ONE WINNES '),
+        return AlertDialog(
+          title: Icon(Icons.shape_line_outlined,
+              size: 70, color: Color.fromARGB(255, 202, 94, 221)),
+          content: SizedBox(
+            height: 20,
+            child: Column(
+              children: [
+                Text(
+                  'It\'s a Draw',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
-            SimpleDialogOption(
+          ),
+          actions: [
+            FilledButton(
               onPressed: () {
                 Navigator.of(context).pop();
                 resetGame();
               },
-              child: const Text('Play Again'),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.replay,
+                    color: Colors.black,
+                  ),
+                  Text('Play Again'),
+                ],
+              ),
             ),
           ],
+          backgroundColor: Colors.black.withOpacity(0.2),
         );
       },
     );
@@ -141,7 +190,7 @@ class _GameScreenState extends State<GameScreen> {
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 125),
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
@@ -168,7 +217,9 @@ class _GameScreenState extends State<GameScreen> {
                         child: Center(
                           child: Text(
                             board[row][col],
-                            style: const TextStyle(fontSize: 40),
+                            style: const TextStyle(
+                                fontSize: 80,
+                                color: Color.fromARGB(255, 232, 138, 248)),
                           ),
                         ),
                       ),
@@ -188,16 +239,54 @@ class _GameScreenState extends State<GameScreen> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FilledButton(
-                onPressed: () {},
-                child: const Text('Player X'),
-              ),
-              FilledButton(
-                onPressed: () {},
-                child: const Text('Player O'),
-              ),
-            ],
+            children: ispalyerX
+                ? [
+                    TextButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                        padding: MaterialStatePropertyAll(
+                            EdgeInsets.symmetric(horizontal: 20)),
+                        backgroundColor: MaterialStateProperty.all(
+                            Color.fromARGB(255, 218, 127, 235)),
+                      ),
+                      child: Text('Player X'),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                        padding: MaterialStatePropertyAll(
+                            EdgeInsets.symmetric(horizontal: 20)),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.transparent),
+                      ),
+                      child: Text('Player O'),
+                    ),
+                  ]
+                : [
+                    TextButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                        padding: MaterialStatePropertyAll(
+                            EdgeInsets.symmetric(horizontal: 20)),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.transparent),
+                      ),
+                      child: Text('Player X'),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                        padding: MaterialStatePropertyAll(
+                            EdgeInsets.symmetric(horizontal: 20)),
+                        backgroundColor: MaterialStateProperty.all(
+                            Color.fromARGB(255, 218, 127, 235)),
+                      ),
+                      child: Text('Player O'),
+                    ),
+                  ],
+          ),
+          SizedBox(
+            height: 150,
           ),
         ],
       ),
